@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: ./Dockerfile
+    environment:
+      REACT_APP_PROXY_HOST: api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: server-dev
+    ports:
+      - "3080:3080"
+    volumes:
+      - ./api:/server/api
+    command: ["npm", "run", "dev"]
