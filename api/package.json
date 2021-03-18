@@ -4,7 +4,7 @@
   "description": "Simple Grid with Detail using reactjs and nodejs",
   "main": "server.js",
   "scripts": {
-    "start": "node server.bundle.js",
+    "start": "node ./build/server.bundle.js",
     "build": "webpack",
     "dev": "nodemon ./server.js localhost 3080"
   },
@@ -20,11 +20,11 @@
   "homepage": "https://github.com/simone6021/react-nodejs-simple-grid",
   "dependencies": {
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.4"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7",
+    "http-proxy-middleware": "^1.0.4",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

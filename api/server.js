@@ -1,30 +1,30 @@
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
+// const path = require('path');
+const usersData = require('./services/userService');
 const app = express(),
-      port = 3080;
+      port = process.env.NODE_EXPRESS_PORT || 3080;
 
-// const users = require('MOCK_DATA.json');
-const users = JSON.parse(fs.readFileSync('MOCK_DATA.json'));
+// Simple wrapper to handle async calls errors.
+const asyncRoute = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+
 
 app.use(express.static('../app/build'));
 
-app.get('/api/users', (req, res) => {
-    res.send('hello');
-    res.send(users);
-});
+app.get('/api/users', asyncRoute(async (req, res) => {
+    res.send(await usersData.getUsers());
+}));
 
-app.get('/api/users/:userId', (req, res) => {
-    const foundUser = users.find(user => user.id == req.params.userId);
+app.get('/api/users/:userId', asyncRoute(async (req, res) => {
+    const foundUser = await usersData.getUser(req.params.userId);
     if (foundUser) {
         res.send(foundUser);
     }
     else {
         res.sendStatus(404);
     }
-});
+}));
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.sendFile('../app/build/index.html');
 });
 
