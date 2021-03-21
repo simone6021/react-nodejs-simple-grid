@@ -6,12 +6,15 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "http-proxy-middleware": "^1.0.4",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
+    "react-data-table-component": "^6.11.7",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.2.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

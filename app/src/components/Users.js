@@ -1,40 +1,74 @@
-import React from 'react'
+import React, { Component } from 'react';
+import DataTable from 'react-data-table-component';
+import { getAllUsers } from '../services/UserService';
+import UserDetail from './UserDetail';
 
-export const Users = ({users}) => {
+class Users extends Component {
 
-    console.log('users length:::', users.length)
-    if (users.length === 0) return null
+  constructor(props) {
+    super(props);
 
-    const UserRow = (user,index) => {
+    this.state = {
+      data: [],
+      count: 0,
+      loading: false,
+      columns: [{
+        selector: 'id',
+        name: 'User ID',
+        center: true,
+        grow: 1
+      }, {
+        selector: 'last_name',
+        name: 'Last Name',
+        grow: 2
+      }, {
+        selector: 'first_name',
+        name: 'First Name',
+        grow: 2
+      }, {
+        selector: 'email',
+        name: 'Email Address',
+        grow: 4
+      }]
+    };
+  }
 
-        return(
-              <tr key = {index} className={index%2 === 0?'odd':'even'}>
-                  <td>{index + 1}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.email}</td>
-              </tr>
-          )
-    }
+  componentDidMount() {
+    this.loadUsers();
+  }
 
-    const userTable = users.map((user,index) => UserRow(user,index))
+  loadUsers() {
+    this.setState({loading: true});
+    getAllUsers()
+      .then(users => {
+        this.setState({data: users, count: users.length, loading: false});
+      });
+  }
 
-    return(
-        <div className="container">
-            <h2>Users</h2>
-            <table className="table table-bordered">
-                <thead>
-                <tr>
-                    <th>User Id</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {userTable}
-                </tbody>
-            </table>
-        </div>
-    )
+  render() {
+    const { columns, data, count, loading } = this.state;
+
+    return (
+      <DataTable
+        // title="Users List"
+        // keyField="id"
+        columns={columns}
+        data={data}
+        progressPending={loading}
+        pagination
+        // paginationServer
+        paginationTotalRows={count}
+        // selectableRows
+        // onChangeRowsPerPage={handlePerRowsChange}
+        // onChangePage={handlePageChange}expandableRows
+        striped
+        highlightOnHover
+        expandableRows
+        expandableRowDisabled={row => row.disabled}
+        expandableRowsComponent={<UserDetail />}
+      />
+    );
+  }
 }
+
+export default Users;

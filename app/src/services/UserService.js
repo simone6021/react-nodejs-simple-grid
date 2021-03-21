@@ -1,15 +1,17 @@
+import axios from "axios";
 
 export async function getAllUsers() {
-
-    const response = await fetch('/api/users');
-    return await response.json();
+    const endpoint = '/api/users';
+    // const response = await fetch(endpoint);
+    // return await response.json();
+    const response = await axios.get(endpoint);
+    return response.data;
 }
 
-export async function createUser(data) {
-    const response = await fetch(`/api/user`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({user: data})
-      })
-    return await response.json();
+export async function getUser(id) {
+    const endpoint = `/api/users/${id}`;
+    // const response = await fetch(endpoint);
+    // return await response.json();
+    const response = await axios.get(endpoint);
+    return response.data;
 }
