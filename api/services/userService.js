@@ -8,7 +8,17 @@ async function loadUsers () {
 }
 
 async function getUsers () {
-    return await loadUsers();
+    const users = await loadUsers();
+    const listFields = [
+        'id',
+        'first_name',
+        'last_name',
+        'email'
+    ];
+    // One liner for filtering out some keys, defined in listFields array, from an object.
+    return users.map(
+        item => Object.fromEntries(Object.entries(item).filter(([key, value]) => listFields.includes(key)))
+    );
 }
 
 async function getUser (id) {
