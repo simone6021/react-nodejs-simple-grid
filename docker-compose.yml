@@ -11,6 +11,8 @@ services:
       - "3000:3000"
     volumes:
       - ./app:/app
+    depends_on:
+      - api
   api:
     build:
       context: .
